@@ -1,56 +1,52 @@
 import org.junit.jupiter.api.Test;
-import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
-    private List<Bogie> getSampleBogies() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 50));
-        bogies.add(new Bogie("First Class", 24));
-        return bogies;
+    @Test
+    void testRegex_ValidTrainID() {
+        assertTrue(TrainConsistManagementApp.isValidTrainId("TRN-1234"));
     }
 
     @Test
-    void testReduce_TotalSeatCalculation() {
-        int result = TrainConsistManagementApp.calculateTotalCapacity(getSampleBogies());
-        assertEquals(146, result);
+    void testRegex_InvalidTrainIDFormat() {
+        assertFalse(TrainConsistManagementApp.isValidTrainId("TRAIN12"));
+        assertFalse(TrainConsistManagementApp.isValidTrainId("TRN12A"));
+        assertFalse(TrainConsistManagementApp.isValidTrainId("1234-TRN"));
     }
 
     @Test
-    void testReduce_MultipleBogiesAggregation() {
-        int result = TrainConsistManagementApp.calculateTotalCapacity(getSampleBogies());
-        assertEquals(146, result);
+    void testRegex_ValidCargoCode() {
+        assertTrue(TrainConsistManagementApp.isValidCargoCode("PET-AB"));
     }
 
     @Test
-    void testReduce_SingleBogieCapacity() {
-        List<Bogie> list = new ArrayList<>();
-        list.add(new Bogie("Sleeper", 72));
-
-        int result = TrainConsistManagementApp.calculateTotalCapacity(list);
-        assertEquals(72, result);
+    void testRegex_InvalidCargoCodeFormat() {
+        assertFalse(TrainConsistManagementApp.isValidCargoCode("PET-ab"));
+        assertFalse(TrainConsistManagementApp.isValidCargoCode("PET123"));
+        assertFalse(TrainConsistManagementApp.isValidCargoCode("AB-PET"));
     }
 
     @Test
-    void testReduce_EmptyBogieList() {
-        int result = TrainConsistManagementApp.calculateTotalCapacity(new ArrayList<>());
-        assertEquals(0, result);
+    void testRegex_TrainIDDigitLengthValidation() {
+        assertFalse(TrainConsistManagementApp.isValidTrainId("TRN-123"));
+        assertFalse(TrainConsistManagementApp.isValidTrainId("TRN-12345"));
     }
 
     @Test
-    void testReduce_AllBogiesIncluded() {
-        int result = TrainConsistManagementApp.calculateTotalCapacity(getSampleBogies());
-        assertEquals(146, result);
+    void testRegex_CargoCodeUppercaseValidation() {
+        assertFalse(TrainConsistManagementApp.isValidCargoCode("PET-aB"));
     }
 
     @Test
-    void testReduce_OriginalListUnchanged() {
-        List<Bogie> original = getSampleBogies();
-        TrainConsistManagementApp.calculateTotalCapacity(original);
+    void testRegex_EmptyInputHandling() {
+        assertFalse(TrainConsistManagementApp.isValidTrainId(""));
+        assertFalse(TrainConsistManagementApp.isValidCargoCode(""));
+    }
 
-        assertEquals(3, original.size());
+    @Test
+    void testRegex_ExactPatternMatch() {
+        assertFalse(TrainConsistManagementApp.isValidTrainId("TRN-1234XYZ"));
+        assertFalse(TrainConsistManagementApp.isValidCargoCode("PET-AB123"));
     }
 }

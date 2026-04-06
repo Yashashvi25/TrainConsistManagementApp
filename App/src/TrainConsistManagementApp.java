@@ -1,41 +1,41 @@
-import java.util.*;
+import java.util.regex.Pattern;
 
-// Bogie class
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    @Override
-    public String toString() {
-        return name + " -> " + capacity;
-    }
-}
-
+// Main class
 public class TrainConsistManagementApp {
 
-    // UC10 Method: Calculate total capacity using reduce
-    public static int calculateTotalCapacity(List<Bogie> bogies) {
-        return bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+    // Regex patterns
+    private static final String TRAIN_ID_REGEX = "TRN-\\d{4}";
+    private static final String CARGO_CODE_REGEX = "PET-[A-Z]{2}";
+
+    // Validate Train ID
+    public static boolean isValidTrainId(String trainId) {
+        return Pattern.matches(TRAIN_ID_REGEX, trainId);
+    }
+
+    // Validate Cargo Code
+    public static boolean isValidCargoCode(String cargoCode) {
+        return Pattern.matches(CARGO_CODE_REGEX, cargoCode);
     }
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 50));
-        bogies.add(new Bogie("First Class", 24));
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        int total = calculateTotalCapacity(bogies);
+        // Validate Train ID
+        if (isValidTrainId(trainId)) {
+            System.out.println("Valid Train ID: " + trainId);
+        } else {
+            System.out.println("Invalid Train ID: " + trainId);
+        }
 
-        System.out.println("\nTotal Seating Capacity: " + total);
+        // Validate Cargo Code
+        if (isValidCargoCode(cargoCode)) {
+            System.out.println("Valid Cargo Code: " + cargoCode);
+        } else {
+            System.out.println("Invalid Cargo Code: " + cargoCode);
+        }
     }
 }
