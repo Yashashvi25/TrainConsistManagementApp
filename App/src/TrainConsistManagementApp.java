@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // Bogie class
@@ -14,17 +13,16 @@ class Bogie {
 
     @Override
     public String toString() {
-        return name + " -> Capacity: " + capacity;
+        return name + " -> " + capacity;
     }
 }
 
 public class TrainConsistManagementApp {
 
-    // Method for filtering (IMPORTANT for testing)
-    public static List<Bogie> filterByCapacity(List<Bogie> bogies, int threshold) {
+    // 🔹 UC9 Method (IMPORTANT for testing)
+    public static Map<String, List<Bogie>> groupByType(List<Bogie> bogies) {
         return bogies.stream()
-                .filter(b -> b.capacity > threshold)
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(b -> b.name));
     }
 
     public static void main(String[] args) {
@@ -34,11 +32,14 @@ public class TrainConsistManagementApp {
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 50));
+        bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("First Class", 24));
 
-        List<Bogie> filtered = filterByCapacity(bogies, 60);
+        Map<String, List<Bogie>> grouped = groupByType(bogies);
 
-        System.out.println("\nFiltered Bogies (capacity > 60):");
-        filtered.forEach(System.out::println);
+        System.out.println("\nGrouped Bogies:");
+        grouped.forEach((key, value) -> {
+            System.out.println(key + " -> " + value);
+        });
     }
 }
