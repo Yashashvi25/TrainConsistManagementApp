@@ -1,57 +1,40 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class TrainConsistManagementApp {
 
-    // Binary Search Method
-    public static boolean binarySearch(String[] bogieIds, String key) {
-
-        // Ensure sorted input
-        Arrays.sort(bogieIds);
-
-        int low = 0;
-        int high = bogieIds.length - 1;
-
-        while (low <= high) {
-
-            int mid = (low + high) / 2;
-
-            int compare = key.compareTo(bogieIds[mid]);
-
-            if (compare == 0) {
-                return true;
-            } else if (compare < 0) {
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
+    // UC20 Method
+    public static boolean searchBogie(String[] bogies, String key) {
+        if (bogies.length == 0) {
+            throw new IllegalStateException("No bogies available for search.");
         }
 
+        for (String bogie : bogies) {
+            if (bogie.equals(key)) {
+                return true;
+            }
+        }
         return false;
     }
 
     public static void main(String[] args) {
 
-        System.out.println("=== Train Consist Management App ===");
+        System.out.println("=== UC20: Exception Handling During Search Operations ===");
 
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
-        };
+        try {
+            String[] bogies1 = {};
+            System.out.println("Searching in empty train...");
+            searchBogie(bogies1, "BG101");
 
-        String searchKey = "BG309";
-
-        System.out.println("Sorted Bogie IDs:");
-        System.out.println(Arrays.toString(bogieIds));
-
-        boolean found = binarySearch(bogieIds, searchKey);
-
-        if (found) {
-            System.out.println("Bogie ID " + searchKey + " found.");
-        } else {
-            System.out.println("Bogie ID " + searchKey + " not found.");
+        } catch (IllegalStateException e) {
+            System.out.println("Exception: " + e.getMessage());
         }
+
+        String[] bogies2 = {"BG101", "BG205", "BG309"};
+
+        System.out.println("\nSearching BG205...");
+        System.out.println("Found: " + searchBogie(bogies2, "BG205"));
+
+        System.out.println("\nSearching BG999...");
+        System.out.println("Found: " + searchBogie(bogies2, "BG999"));
     }
 }
