@@ -1,101 +1,74 @@
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
     @Test
-    void testSort_BasicAlphabeticalSorting() {
-        String[] bogies = {
-                "Sleeper",
-                "AC Chair",
-                "First Class",
-                "General",
-                "Luxury"
+    void testSearch_BogieFound() {
+        String[] ids = {
+                "BG101",
+                "BG205",
+                "BG309",
+                "BG412",
+                "BG550"
         };
 
-        TrainConsistManagementApp.sortBogieNames(bogies);
-
-        assertArrayEquals(
-                new String[]{
-                        "AC Chair",
-                        "First Class",
-                        "General",
-                        "Luxury",
-                        "Sleeper"
-                },
-                bogies
+        assertTrue(
+                TrainConsistManagementApp.linearSearch(ids, "BG309")
         );
     }
 
     @Test
-    void testSort_UnsortedInput() {
-        String[] bogies = {
-                "Luxury",
-                "General",
-                "Sleeper",
-                "AC Chair"
+    void testSearch_BogieNotFound() {
+        String[] ids = {
+                "BG101",
+                "BG205",
+                "BG309",
+                "BG412",
+                "BG550"
         };
 
-        TrainConsistManagementApp.sortBogieNames(bogies);
-
-        assertArrayEquals(
-                new String[]{
-                        "AC Chair",
-                        "General",
-                        "Luxury",
-                        "Sleeper"
-                },
-                bogies
+        assertFalse(
+                TrainConsistManagementApp.linearSearch(ids, "BG999")
         );
     }
 
     @Test
-    void testSort_AlreadySortedArray() {
-        String[] bogies = {
-                "AC Chair",
-                "First Class",
-                "General"
+    void testSearch_FirstElementMatch() {
+        String[] ids = {
+                "BG101",
+                "BG205",
+                "BG309",
+                "BG412",
+                "BG550"
         };
 
-        String[] original = bogies.clone();
-
-        TrainConsistManagementApp.sortBogieNames(bogies);
-
-        assertArrayEquals(original, bogies);
-    }
-
-    @Test
-    void testSort_DuplicateBogieNames() {
-        String[] bogies = {
-                "Sleeper",
-                "AC Chair",
-                "Sleeper",
-                "General"
-        };
-
-        TrainConsistManagementApp.sortBogieNames(bogies);
-
-        assertArrayEquals(
-                new String[]{
-                        "AC Chair",
-                        "General",
-                        "Sleeper",
-                        "Sleeper"
-                },
-                bogies
+        assertTrue(
+                TrainConsistManagementApp.linearSearch(ids, "BG101")
         );
     }
 
     @Test
-    void testSort_SingleElementArray() {
-        String[] bogies = {"Sleeper"};
+    void testSearch_LastElementMatch() {
+        String[] ids = {
+                "BG101",
+                "BG205",
+                "BG309",
+                "BG412",
+                "BG550"
+        };
 
-        TrainConsistManagementApp.sortBogieNames(bogies);
+        assertTrue(
+                TrainConsistManagementApp.linearSearch(ids, "BG550")
+        );
+    }
 
-        assertArrayEquals(
-                new String[]{"Sleeper"},
-                bogies
+    @Test
+    void testSearch_SingleElementArray() {
+        String[] ids = {"BG101"};
+
+        assertTrue(
+                TrainConsistManagementApp.linearSearch(ids, "BG101")
         );
     }
 }
