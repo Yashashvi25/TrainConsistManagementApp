@@ -2,12 +2,27 @@ import java.util.Arrays;
 
 public class TrainConsistManagementApp {
 
-    // Linear Search Method
-    public static boolean linearSearch(String[] bogieIds, String key) {
+    // Binary Search Method
+    public static boolean binarySearch(String[] bogieIds, String key) {
 
-        for (String id : bogieIds) {
-            if (id.equals(key)) {
+        // Ensure sorted input
+        Arrays.sort(bogieIds);
+
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        while (low <= high) {
+
+            int mid = (low + high) / 2;
+
+            int compare = key.compareTo(bogieIds[mid]);
+
+            if (compare == 0) {
                 return true;
+            } else if (compare < 0) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
             }
         }
 
@@ -28,10 +43,10 @@ public class TrainConsistManagementApp {
 
         String searchKey = "BG309";
 
-        System.out.println("Available Bogie IDs:");
+        System.out.println("Sorted Bogie IDs:");
         System.out.println(Arrays.toString(bogieIds));
 
-        boolean found = linearSearch(bogieIds, searchKey);
+        boolean found = binarySearch(bogieIds, searchKey);
 
         if (found) {
             System.out.println("Bogie ID " + searchKey + " found.");

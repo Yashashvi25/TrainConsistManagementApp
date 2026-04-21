@@ -4,71 +4,75 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrainConsistManagementAppTest {
 
     @Test
-    void testSearch_BogieFound() {
+    void testBinarySearch_BogieFound() {
         String[] ids = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
+                "BG101","BG205","BG309","BG412","BG550"
         };
 
         assertTrue(
-                TrainConsistManagementApp.linearSearch(ids, "BG309")
+                TrainConsistManagementApp.binarySearch(ids, "BG309")
         );
     }
 
     @Test
-    void testSearch_BogieNotFound() {
+    void testBinarySearch_BogieNotFound() {
         String[] ids = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
+                "BG101","BG205","BG309","BG412","BG550"
         };
 
         assertFalse(
-                TrainConsistManagementApp.linearSearch(ids, "BG999")
+                TrainConsistManagementApp.binarySearch(ids, "BG999")
         );
     }
 
     @Test
-    void testSearch_FirstElementMatch() {
+    void testBinarySearch_FirstElementMatch() {
         String[] ids = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
+                "BG101","BG205","BG309","BG412","BG550"
         };
 
         assertTrue(
-                TrainConsistManagementApp.linearSearch(ids, "BG101")
+                TrainConsistManagementApp.binarySearch(ids, "BG101")
         );
     }
 
     @Test
-    void testSearch_LastElementMatch() {
+    void testBinarySearch_LastElementMatch() {
         String[] ids = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
+                "BG101","BG205","BG309","BG412","BG550"
         };
 
         assertTrue(
-                TrainConsistManagementApp.linearSearch(ids, "BG550")
+                TrainConsistManagementApp.binarySearch(ids, "BG550")
         );
     }
 
     @Test
-    void testSearch_SingleElementArray() {
+    void testBinarySearch_SingleElementArray() {
         String[] ids = {"BG101"};
 
         assertTrue(
-                TrainConsistManagementApp.linearSearch(ids, "BG101")
+                TrainConsistManagementApp.binarySearch(ids, "BG101")
+        );
+    }
+
+    @Test
+    void testBinarySearch_EmptyArray() {
+        String[] ids = {};
+
+        assertFalse(
+                TrainConsistManagementApp.binarySearch(ids, "BG101")
+        );
+    }
+
+    @Test
+    void testBinarySearch_UnsortedInputHandled() {
+        String[] ids = {
+                "BG309","BG101","BG550","BG205","BG412"
+        };
+
+        assertTrue(
+                TrainConsistManagementApp.binarySearch(ids, "BG205")
         );
     }
 }
